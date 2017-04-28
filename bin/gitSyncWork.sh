@@ -19,7 +19,7 @@ function existRemote () {
   fi
 }
 
-echo -e "Starting ${BWhite}synchronizing${NC} '${BRed}master${NC}' & '${BRed}dev${NC}' with ${BWhite}upstream KC2.0${NC}..."
+echo -e "${BWhite}Synchronization${NC} '${BGreen}master${NC}' & '${BGreen}dev${NC}' & '${BGreen}release${NC}' with ${BWhite}upstream KC2.0${NC}... ${BGreen}started${NC}"
 
 if ! existRemote 'upstream' ; then
     echo -e "\t${BRed}>>> FATAL:${NC} Remote ${BWhite}upstream${NC} does not exist ${BRed}!!!${NC}"
@@ -33,7 +33,7 @@ cd $repository
 git fetch upstream
 
 #master
-echo -e "\n> ${BWhite}Checking out${NC} '${BRed}master${NC}'"
+echo -e "\n> ${BWhite}Checking out${NC} '${BGreen}master${NC}'"
 git checkout master
 echo -e "\n> ${BWhite}Pull${NC} '${BRed}master${NC}' from '${BRed}upstream${NC}'"
 git pull upstream master
@@ -44,7 +44,7 @@ echo -e "\n> ${BWhite}Push${NC} '${BRed}master${NC}' to '${BRed}origin/master${N
 git push origin master
 
 #dev
-echo -e "\n> ${BWhite}Checking out${NC} '${BRed}dev${NC}'"
+echo -e "\n> ${BWhite}Checking out${NC} '${BGreen}dev${NC}'"
 git checkout dev
 echo -e "\n> ${BWhite}Pull${NC} '${BRed}dev${NC}' from '${BRed}upstream${NC}'"
 git pull upstream dev
@@ -54,4 +54,15 @@ git merge upstream dev
 echo -e "\n> ${BWhite}Push${NC} '${BRed}local/dev${NC}' to '${BRed}origin/dev${NC}'"
 git push -u origin dev
 
-echo -e "\nStarting ${BWhite}synchronizing${NC} '${BRed}master${NC}' & '${BRed}dev${NC}' with ${BWhite}upstream KC2.0${NC}... ${BGreen}done${NC}"
+#release
+echo -e "\n> ${BWhite}Checking out${NC} '${BGreen}release${NC}'"
+git checkout release
+echo -e "\n> ${BWhite}Pull${NC} '${BRed}release${NC}' from '${BRed}upstream${NC}'"
+git pull upstream release
+#echo -e "\n> ${BWhite}Merge${NC} '${BRed}upstream/dev${NC}' to '${BRed}local/dev${NC}'"
+# ?? maybe not needed
+git merge upstream release
+echo -e "\n> ${BWhite}Push${NC} '${BRed}local/release${NC}' to '${BRed}origin/release${NC}'"
+git push -u origin release
+
+echo -e "${BWhite}Synchronization${NC} '${BGreen}master${NC}' & '${BGreen}dev${NC}' & '${BGreen}release${NC}' with ${BWhite}upstream KC2.0${NC}... ${BGreen}finished${NC}"
