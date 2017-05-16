@@ -1,15 +1,16 @@
 #!/bin/bash
-repository=~/ghe.fork/KC2.0/
+local_repos_dir=`realpath ~/ghe.fork/`
+repo_name="KC2.0"
+repo_path=${local_repos_dir}/${repo_name}
+branch_remote_tracking="origin"
+git_remote="upstream"
+declare -a branches=("master" "dev" "release")
 
-#colors
-NC="\x1B[m"               # Color Reset
-BWhite='\x1B[1;37m'       # White
-BRed='\x1B[1;31m'         # Red
-BGreen='\x1B[1;32m'       # Green
-
+# functions
 function existRemote () {
+    local repository=$2
     cd $repository
-    remoteList=`git remote -v`
+    local remoteList=`git remote -v`
     if [[ $remoteList == *"$1"* ]]; then
         #echo "Tap: $1 exists..."
         return 0;
@@ -19,9 +20,37 @@ function existRemote () {
   fi
 }
 
+function arrayJoinBy {
+    local param1=$1
+    local param2=("${!2}")
+    IFS=$param1
+    echo "${param2[*]// /|}"
+    IFS=$' \t\n'
+}
+
+# print input variables
+echo "local_repos_dir        : $local_repos_dir"
+echo "repo_name              : $repo_name"
+echo "repo_path              : $repo_path"
+echo "branches               : `arrayJoinBy "," branches[@]`"
+echo "branch_remote_tracking : $branch_remote_tracking"
+echo "git_remote             : $git_remote"
+echo ""
+
+# Colors
+NC="\x1B[m"               # Color Reset
+BWhite='\x1B[1;37m'       # White
+BRed='\x1B[1;31m'         # Red
+BGreen='\x1B[1;32m'       # Green
+BYellow='\x1B[1;33m'      # Yellow
+
+
+
+# Main
+cd ${repo_path}
 echo -e "${BWhite}Synchronization${NC} '${BGreen}master${NC}' & '${BGreen}dev${NC}' & '${BGreen}release${NC}' with ${BWhite}upstream KC2.0${NC}... ${BGreen}started${NC}"
 
-if ! existRemote 'upstream' ; then
+if ! existRemote "$git_remote" "`pwd`" ; then
     echo -e "\t${BRed}>>> FATAL:${NC} Remote ${BWhite}upstream${NC} does not exist ${BRed}!!!${NC}"
     echo -e "\tAdd remote with:"
     echo -e "\t\tgit remote add <REMOTE_NAME> <REMOTE_URL>"
@@ -29,40 +58,23 @@ if ! existRemote 'upstream' ; then
     exit 1
 fi
 
-cd $repository
-git fetch upstream
+for branch in "${branches[@]}"
+do
+    echo -e "\n${BYellow}Start${NC} ${BWhite}synchronizing${NC} '${BRed}${branch}${NC}' of '${BRed}${repo_name}${NC}' with '${BRed}${git_remote}${NC}'..."
 
-#master
-echo -e "\n> ${BWhite}Checking out${NC} '${BGreen}master${NC}'"
-git checkout master
-echo -e "\n> ${BWhite}Pull${NC} '${BRed}master${NC}' from '${BRed}upstream${NC}'"
-git pull upstream master
-#echo -e "\n> ${BWhite}Merge${NC} '${BRed}upstream/master${NC}' to '${BRed}local/master${NC}'"
-# ?? maybe not needed
-git merge upstream master
-echo -e "\n> ${BWhite}Push${NC} '${BRed}master${NC}' to '${BRed}origin/master${NC}'"
-git push origin master
+    echo -e "\n> ${BWhite}Fetching${NC} from '${BRed}${git_remote}${NC}'"
+    git fetch ${git_remote}
 
-#dev
-echo -e "\n> ${BWhite}Checking out${NC} '${BGreen}dev${NC}'"
-git checkout dev
-echo -e "\n> ${BWhite}Pull${NC} '${BRed}dev${NC}' from '${BRed}upstream${NC}'"
-git pull upstream dev
-#echo -e "\n> ${BWhite}Merge${NC} '${BRed}upstream/dev${NC}' to '${BRed}local/dev${NC}'"
-# ?? maybe not needed
-git merge upstream dev
-echo -e "\n> ${BWhite}Push${NC} '${BRed}local/dev${NC}' to '${BRed}origin/dev${NC}'"
-git push -u origin dev
+    echo -e "\n> ${BWhite}Checking out${NC} '${BRed}${branch}${NC}'"
+    git checkout ${branch}
 
-#release
-echo -e "\n> ${BWhite}Checking out${NC} '${BGreen}release${NC}'"
-git checkout release
-echo -e "\n> ${BWhite}Pull${NC} '${BRed}release${NC}' from '${BRed}upstream${NC}'"
-git pull upstream release
-#echo -e "\n> ${BWhite}Merge${NC} '${BRed}upstream/dev${NC}' to '${BRed}local/dev${NC}'"
-# ?? maybe not needed
-git merge upstream release
-echo -e "\n> ${BWhite}Push${NC} '${BRed}local/release${NC}' to '${BRed}origin/release${NC}'"
-git push -u origin release
+    echo -e "\n> ${BWhite}Pulling${NC} '${BRed}${branch}${NC}' from '${BRed}${git_remote}${NC}'"
+    git pull ${git_remote} ${branch}
 
-echo -e "${BWhite}Synchronization${NC} '${BGreen}master${NC}' & '${BGreen}dev${NC}' & '${BGreen}release${NC}' with ${BWhite}upstream KC2.0${NC}... ${BGreen}finished${NC}"
+    echo -e "\n> ${BWhite}Pushing${NC} '${BRed}${branch}${NC}' to '${BRed}${branch_remote_tracking}${NC}'"
+    git push -u ${branch_remote_tracking} ${branch}
+
+    echo -e "\nFinished ${BWhite}synchronizing${NC} '${BRed}${branch}${NC}' of '${BRed}${repo_name}${NC}' with '${BRed}${git_remote}${NC}'..."
+done
+
+echo -e "\n${BWhite}Synchronization${NC} '${BGreen}master${NC}' & '${BGreen}dev${NC}' & '${BGreen}release${NC}' with ${BWhite}upstream KC2.0${NC}... ${BGreen}finished${NC}"
