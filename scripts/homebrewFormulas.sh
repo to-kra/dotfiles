@@ -15,6 +15,7 @@ source $my_dir/brewtools.sh
 # Mac Homebrew apps
 if isMacOs ; then
   ########################## SDK's'
+  brewInstall 'groovy'
 
   ########################## Build tools
   # Ant
