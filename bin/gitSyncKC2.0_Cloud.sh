@@ -1,10 +1,10 @@
 #!/bin/bash
 local_repos_dir=`realpath ~/ghe.fork/`
-repo_name="KC2.0"
+repo_name="KC2.0_Cloud"
 repo_path=${local_repos_dir}/${repo_name}
 branch_remote_tracking="origin"
 git_remote="upstream"
-declare -a branches=("master" "dev" "release")
+declare -a branches=("master" "dev")
 
 # functions
 function existRemote () {
