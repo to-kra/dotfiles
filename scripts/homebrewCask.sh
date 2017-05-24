@@ -11,7 +11,7 @@ my_dir="$( cd -P "$( dirname "$source" )" && pwd )"
 
 ### imports
 source $my_dir/os.sh
-source $my_dir/brewtools.sh
+source $my_dir/homebrewTools.sh
 
 ### main
 # Mac homebrew cask : Applications
@@ -35,6 +35,8 @@ if isMacOs ; then
   brewCaskInstall 'sourcetree'
   # Virtual Box
   brewCaskInstall 'virtualbox'
+  # IntelliJ IDEA Community Edition
+  brewCaskInstall 'intellij-idea-ce'
 
   ########################## System utils
   # App Zapper

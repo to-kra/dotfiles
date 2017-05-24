@@ -10,31 +10,9 @@ done
 my_dir="$( cd -P "$( dirname "$source" )" && pwd )"
 
 source $my_dir/os.sh
-source $my_dir/brewtools.sh
+source $my_dir/homebrewTools.sh
 #####################################################################
 # Mac Homebrew apps
 if isMacOs ; then
-  ########################## SDK's'
-
-  ########################## Build tools
-  # Ant
-  brewInstall 'ant'
-  # Gradle
-  brewInstall 'gradle'
-  # Maven
-  brewInstall 'maven'
-
-  ########################## Daily use cli tools
-  # git
-  brewInstall 'git'
-  # Core utils: grealink etc.
-  brewInstall 'coreutils'
-  # Python
-  brewInstall 'python'
-  # Python3
-  brewInstall 'python3'
-  # Rsync
-  brewInstall 'rsync'
-  # Wget
-  brewInstall 'wget'
+  
 fi 

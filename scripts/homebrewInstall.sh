@@ -10,7 +10,7 @@ done
 my_dir="$( cd -P "$( dirname "$source" )" && pwd )"
 
 source $my_dir/os.sh
-source $my_dir/brewtools.sh
+source $my_dir/homebrewTools.sh
 #####################################################################
 # Mac Homebrew
 # Homebrew installation
@@ -22,12 +22,12 @@ if isMacOs ; then
   fi
 fi
 
-# Variables for brew to speed up functions bellow
+# Variables for homebrew to speed up functions
 brewList=''
 brewCaskList=''
 brewTapList=''
 if isMacOs ; then
   brewList=`brew list`
   brewCaskList=`brew cask list`
-  brewTapList=`brew tap`
+  #brewTapList=`brew tap`
 fi

@@ -21,10 +21,10 @@ source $workingDir/scripts/os.sh
 source $workingDir/scripts/homebrewInstall.sh
 
 # link additional own homebrew functions
-source $workingDir/scripts/brewtools.sh
+source $workingDir/scripts/homebrewTools.sh
 
 # tapping brew repositories
-source $workingDir/scripts/homebrewTap.sh
+#source $workingDir/scripts/homebrewTap.sh
 
 # install brew formulas
 source $workingDir/scripts/homebrewFormulas.sh
@@ -58,6 +58,10 @@ export PATH=$workingDir/scripts:$PATH
 export PATH=$workingDir/bin:$PATH
 
 if isMacOs ; then
+  # to avoid locale warning over ssh
+  export LANG="en_US.UTF-8"
+  export LC_ALL="en_US.UTF-8"
+
   export PATH=/Applications:$PATH
 
   ## SCM tool

@@ -11,7 +11,7 @@ my_dir="$( cd -P "$( dirname "$source" )" && pwd )"
 
 ### imports
 source $my_dir/os.sh
-source $my_dir/brewtools.sh
+source $my_dir/homebrewTools.sh
 
 ### main
 # Mac homebrew cask : Applications
