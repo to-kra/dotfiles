@@ -12,3 +12,4 @@ I know there are lots of such projects, but I wanted to make my own to improve &
 * Homebrew
 * Homebrew Cask
 * Caskroom Versions
+* NPM
