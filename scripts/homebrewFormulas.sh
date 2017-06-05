@@ -21,6 +21,8 @@ if isMacOs ; then
   brewInstall 'node'
   # vert.x
   brewInstall 'vert.x'
+  # phantomjs
+  brewInstall 'phantomjs'
 
   ########################## Build tools
   # Ant
