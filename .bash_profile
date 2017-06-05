@@ -35,6 +35,9 @@ source $workingDir/scripts/homebrewCask.sh
 # install brew caskroom/versions
 source $workingDir/scripts/homebrewCaskVersions.sh
 
+# install npm apps
+source $workingDir/scripts/npmInstall.sh
+
 #####################################################################
 # Ubuntu : apt
 source $workingDir/scripts/ubuntuAptInstall.sh
