@@ -16,4 +16,6 @@ source $my_dir/nodeJsTools.sh
 if isMacOs ; then
     # https://please.hackmyresume.com/
     npmInstallGlobal 'hackmyresume'
+    # https://github.com/fluentdesk/FluentCV
+    npmInstallGlobal 'fluentcv'
 fi
