@@ -37,6 +37,8 @@ if isMacOs ; then
   brewCaskInstall 'virtualbox'
   # IntelliJ IDEA Community Edition
   brewCaskInstall 'intellij-idea-ce'
+  # https://wkhtmltopdf.org/
+  brewCaskInstall 'wkhtmltopdf'
 
   ########################## System utils
   # App Zapper
