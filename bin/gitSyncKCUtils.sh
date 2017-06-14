@@ -46,7 +46,7 @@ BYellow='\x1B[1;33m'      # Yellow
 
 # Main
 cd ${repo_path}
-echo -e "${BWhite}Synchronization${NC} '${BGreen}master${NC}' & '${BGreen}dev${NC}' & '${BGreen}release${NC}' with ${BWhite}upstream KC2.0${NC}... ${BGreen}started${NC}"
+echo -e "${BWhite}Synchronization${NC} '${BGreen}`arrayJoinBy "," branches[@]`${NC}' with ${BWhite}upstream:$repo_name${NC}... ${BGreen}started${NC}"
 
 if ! existRemote "$git_remote" "`pwd`" ; then
     echo -e "\t${BRed}>>> FATAL:${NC} Remote ${BWhite}upstream${NC} does not exist ${BRed}!!!${NC}"
