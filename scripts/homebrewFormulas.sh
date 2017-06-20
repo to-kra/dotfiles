@@ -35,6 +35,8 @@ if isMacOs ; then
   ########################## Daily use cli tools
   # git
   brewInstall 'git'
+  # git large file storage
+  brewInstall 'git-lfs'
   # Core utils: grealink etc.
   brewInstall 'coreutils'
   # Python
@@ -45,4 +47,9 @@ if isMacOs ; then
   brewInstall 'rsync'
   # Wget
   brewInstall 'wget'
+
+  ########################## System tools
+  # jEnv - Manage your Java environment http://www.jenv.be/
+  brewInstall 'jenv'
+  brewInstall 'gnuplot'
 fi 
