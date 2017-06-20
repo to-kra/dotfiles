@@ -20,6 +20,9 @@ source $my_dir/ubuntuOsTools.sh
 
 # Java
 if isMacOs ; then
+    # ll Library/Java/JavaVirtualMachines/ -> will list all java dirs
+    # then use: greadlink -f jdk1.8.0_112.jdk -> to get real paths
+    # then add them into jenv: jenv add /System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home oracle64-1.6.0.39 added
     export JAVA_HOME=$(/usr/libexec/java_home)
 fi
 if isUbuntu ; then
