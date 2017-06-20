@@ -50,6 +50,7 @@ alias gs='git status'
 alias gc='git commit'
 alias ga='git add'
 alias docker_jenkins='docker run -p 8080:8080 -p 50000:50000 -v /Users/tokra/jenkins_home:/var/jenkins_home jenkins'
+alias wgetkc='wget --user-agent="IBM_Knowledge_Center/1.8"'
 
 # tools
 alias cp_rsync='rsync -aP'
