@@ -11,9 +11,10 @@
 	name = 
 	email = 
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
 	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
 [alias]
 	cm = commit -m
 	co = checkout
@@ -35,3 +36,5 @@
 	undo = checkout HEAD^
 [commit]
 	template = /Users/tokra/.stCommitMsg
+[init]
+	templatedir = /Users/tokra/.git-templates
