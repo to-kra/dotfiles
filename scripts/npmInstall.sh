@@ -18,4 +18,9 @@ if isMacOs ; then
     npmInstallGlobal 'hackmyresume'
     # https://github.com/fluentdesk/FluentCV
     npmInstallGlobal 'fluentcv'
+    # https://www.npmjs.com/package/fluent-themes
+    npmInstallGlobal 'fluent-themes'
+
+    npmInstallGlobal 'resume-cli'
+    npmInstallGlobal 'gulp-cli'
 fi
