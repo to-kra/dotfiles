@@ -28,6 +28,10 @@ function arrayJoinBy {
     IFS=$' \t\n'
 }
 
+# Log separator
+echo "============================================================="
+echo `date`
+
 # print input variables
 echo "local_repos_dir        : $local_repos_dir"
 echo "repo_name              : $repo_name"

@@ -1,4 +1,5 @@
 #!/bin/bash
+# Variables
 local_repos_dir=`realpath ~/ghe.fork/`
 repo_name="KC2.0"
 repo_path=${local_repos_dir}/${repo_name}
@@ -6,7 +7,14 @@ branch_remote_tracking="origin"
 git_remote="upstream"
 declare -a branches=("master" "dev" "release")
 
-# functions
+# Colors
+NC="\x1B[m"               # Color Reset
+BWhite='\x1B[1;37m'       # White
+BRed='\x1B[1;31m'         # Red
+BGreen='\x1B[1;32m'       # Green
+BYellow='\x1B[1;33m'      # Yellow
+
+# Functions
 function existRemote () {
     local repository=$2
     cd $repository
@@ -28,26 +36,34 @@ function arrayJoinBy {
     IFS=$' \t\n'
 }
 
+function printlnSeparator {
+    echo "============================================================="
+    echo "Sync started: '`date`'"
+}
+
+function printVars {
+    echo -e "\nlocal_repos_dir        : $local_repos_dir"
+    echo "repo_name              : $repo_name"
+    echo "repo_path              : $repo_path"
+    echo "branches               : `arrayJoinBy "," branches[@]`"
+    echo "branch_remote_tracking : $branch_remote_tracking"
+    echo "git_remote             : $git_remote"
+    echo ""
+}
+
+# ========================
+# =        Main          =
+# ========================
+
+# Log separator
+printlnSeparator
+
 # print input variables
-echo "local_repos_dir        : $local_repos_dir"
-echo "repo_name              : $repo_name"
-echo "repo_path              : $repo_path"
-echo "branches               : `arrayJoinBy "," branches[@]`"
-echo "branch_remote_tracking : $branch_remote_tracking"
-echo "git_remote             : $git_remote"
-echo ""
-
-# Colors
-NC="\x1B[m"               # Color Reset
-BWhite='\x1B[1;37m'       # White
-BRed='\x1B[1;31m'         # Red
-BGreen='\x1B[1;32m'       # Green
-BYellow='\x1B[1;33m'      # Yellow
-
-# Main
+printVars
 cd ${repo_path}
 echo -e "${BWhite}Synchronization${NC} '${BGreen}master${NC}' & '${BGreen}dev${NC}' & '${BGreen}release${NC}' with ${BWhite}upstream KC2.0${NC}... ${BGreen}started${NC}"
 
+# check for remote upstream in local repo
 if ! existRemote "$git_remote" "`pwd`" ; then
     echo -e "\t${BRed}>>> FATAL:${NC} Remote ${BWhite}upstream${NC} does not exist ${BRed}!!!${NC}"
     echo -e "\tAdd remote with:"
@@ -56,6 +72,7 @@ if ! existRemote "$git_remote" "`pwd`" ; then
     exit 1
 fi
 
+# sync of all branches
 for branch in "${branches[@]}"
 do
     echo -e "\n${BYellow}Start${NC} ${BWhite}synchronizing${NC} '${BRed}${branch}${NC}' of '${BRed}${repo_name}${NC}' with '${BRed}${git_remote}${NC}'..."
