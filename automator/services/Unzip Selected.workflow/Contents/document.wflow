@@ -128,8 +128,8 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>cd ~/
-for f in "$@"; do
+					<string>for f in "$@"; do
+	cd "$(dirname "$f")"
 	unzip -o "$f"
 done
 </string>
@@ -245,7 +245,7 @@ done
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>472.000000:319.000000</string>
+				<string>369.000000:319.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/English.lproj/main.nib</string>
 			</dict>
@@ -255,7 +255,7 @@ done
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>33D791AB-EA58-484C-A772-66E0BD6CD875</key>
+		<key>4106C510-0942-408A-AF23-020D52730827</key>
 		<dict>
 			<key>from</key>
 			<string>DCBC2B10-73E9-4238-9176-D7790FCA1E4F - DCBC2B10-73E9-4238-9176-D7790FCA1E4F</string>
