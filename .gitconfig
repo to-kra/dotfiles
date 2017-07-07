@@ -34,6 +34,7 @@
 	lg = !"git lg1"
 	br = branch
 	undo = checkout HEAD^
+	reset = checkout --
 [commit]
 	template = /Users/tokra/.stCommitMsg
 [init]
