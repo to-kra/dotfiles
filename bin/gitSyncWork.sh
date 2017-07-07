@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# resolve currentDirectory even if symlink
+# resolve this script executable working directory, handle also symlinks
 source="${BASH_SOURCE[0]}"
 while [ -h "$source" ]; do # resolve $source until the file is no longer a symlink
   currentDirectory="$( cd -P "$( dirname "$source" )" && pwd )"
@@ -8,6 +8,12 @@ while [ -h "$source" ]; do # resolve $source until the file is no longer a symli
   [[ $source != /* ]] && source="$currentDirectory/$source" # if $source was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
 workingDir="$( cd -P "$( dirname "$source" )" && pwd )"
+root_path="$(echo $workingDir | rev | cut -d "/" -f2- | rev)"
+
+# Imports
+source $root_path/scripts/shellTools.sh
+source $root_path/scripts/gitTools.sh
+source $root_path/scripts/colors.sh
 
 # Variables
 enhanced_logs_enabled=true
@@ -17,40 +23,10 @@ local_repository_path="${git_repositories_root}/${project_name}"
 fork_remote="origin"
 project_remote="upstream"
 default_branches=("master" "dev" "release")
-feature_branches_string=$(cat $workingDir/gitSyncWork_KC2.0_featureBranches.txt |tr "\n" " ")
-feature_branches=($feature_branches_string)
+feature_branches=($(cat $workingDir/gitSyncWork_KC2.0_featureBranches.txt |tr "\n" " "))
 branches=("${default_branches[@]}" "${feature_branches[@]}")
 
-# Colors
-NC="\x1B[m"               # Color Reset
-BWhite='\x1B[1;37m'       # White
-BRed='\x1B[1;31m'         # Red
-BGreen='\x1B[1;32m'       # Green
-BYellow='\x1B[1;33m'      # Yellow
-
 # Functions
-function readFile {
-    IFS=$'\n' read -d '' -r -a  < "$path_to_file"
-}
-
-
-function stringEquals {
-    local str1=$1
-    local str2=$2
-    if [ "$str1" == "$str2" ]; then
-        return 0
-    fi
-    return 1
-}
-
-function arrayJoinBy {
-    local separator=$1
-    local array=("${!2}")
-    IFS=$separator
-    echo "${array[*]// /|}"
-    IFS=$' \t\n'
-}
-
 function log {
     if [ $enhanced_logs_enabled = true ] ; then
         logType="$1"
@@ -90,48 +66,6 @@ function log {
     fi
 }
 
-function gitRemoteExist {
-    local repository=$2
-    cd $repository
-    local remoteList=`git remote -v`
-    if [[ "$remoteList" == *"$1"* ]]; then
-        return 0;
-    else
-        return 1;
-    fi
-}
-
-function gitCheckout {
-    local branch="$1"
-    echo -e "\n> ${BWhite}Checking out${NC} '${BRed}${branch}${NC}'"
-    git checkout ${branch}
-}
-
-function gitFetch {
-    local remote="$1"
-    echo -e "\n> ${BWhite}Fetching${NC} from '${BRed}${remote}${NC}'"
-    git fetch ${remote}
-}
-
-function gitPull {
-    local remote="$1"
-    local branch="$2"
-    echo -e "\n> ${BWhite}Pulling${NC} '${BRed}${branch}${NC}' from '${BRed}${remote}${NC}'"
-    git pull ${remote} ${branch}
-}
-
-function gitPush {
-    local remote="$1"
-    local branch="$2"
-    echo -e "\n> ${BWhite}Pushing${NC} '${BRed}${branch}${NC}' to '${BRed}${remote}${NC}'"
-    git push -u ${remote} ${branch}
-}
-
-function gitGetActualCheckedOutBranch {
-    local branch=`git branch | grep \* | cut -d ' ' -f2-`
-    echo $branch
-}
-
 function synchBranch {
     local branch="$1"
     local remote_fork="$2"
@@ -163,7 +97,7 @@ function setUp {
     actual_branch="$(gitGetActualCheckedOutBranch)"
     
     # check for remote upstream in local repo
-    if ! gitRemoteExist "$project_remote" "`pwd`" ; then
+    if ! gitRemoteExist "$project_remote" "$local_repository_path" ; then
         log "missingRemote" "$project_remote"
         exit 1
     fi
