@@ -52,4 +52,4 @@ function test() {
     echo -e "\n${BRed}Memory stats :$NC " ; free
 }
 
-test
+#test
