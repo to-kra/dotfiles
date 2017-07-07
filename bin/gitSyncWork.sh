@@ -1,12 +1,25 @@
 #!/bin/bash
+
+# resolve currentDirectory even if symlink
+source="${BASH_SOURCE[0]}"
+while [ -h "$source" ]; do # resolve $source until the file is no longer a symlink
+  currentDirectory="$( cd -P "$( dirname "$source" )" && pwd )"
+  source="$(readlink "$source")"
+  [[ $source != /* ]] && source="$currentDirectory/$source" # if $source was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+workingDir="$( cd -P "$( dirname "$source" )" && pwd )"
+
 # Variables
-local_repos_dir=`realpath ~/ghe.fork/`
-repo_name="KC2.0"
-repo_path=${local_repos_dir}/${repo_name}
-branch_remote_tracking="origin"
-git_remote="upstream"
-default_branch="dev"
-declare -a branches=("master" "$default_branch" "release" "disqus" "video-search")
+enhanced_logs_enabled=true
+git_repositories_root=$(realpath ~/ghe.fork/)
+project_name="KC2.0"
+local_repository_path="${git_repositories_root}/${project_name}"
+fork_remote="origin"
+project_remote="upstream"
+default_branches=("master" "dev" "release")
+feature_branches_string=$(cat $workingDir/gitSyncWork_KC2.0_featureBranches.txt |tr "\n" " ")
+feature_branches=($feature_branches_string)
+branches=("${default_branches[@]}" "${feature_branches[@]}")
 
 # Colors
 NC="\x1B[m"               # Color Reset
@@ -16,47 +29,76 @@ BGreen='\x1B[1;32m'       # Green
 BYellow='\x1B[1;33m'      # Yellow
 
 # Functions
-function existRemote () {
+function readFile {
+    IFS=$'\n' read -d '' -r -a  < "$path_to_file"
+}
+
+
+function stringEquals {
+    local str1=$1
+    local str2=$2
+    if [ "$str1" == "$str2" ]; then
+        return 0
+    fi
+    return 1
+}
+
+function arrayJoinBy {
+    local separator=$1
+    local array=("${!2}")
+    IFS=$separator
+    echo "${array[*]// /|}"
+    IFS=$' \t\n'
+}
+
+function log {
+    if [ $enhanced_logs_enabled = true ] ; then
+        logType="$1"
+        case $logType in
+            separator)
+                echo "*************************************************************"
+                echo -e "Synchronization started: ${BWhite}$(date)${NC}"
+            ;;
+            start)
+                echo -e "${BWhite}Synchronization${NC} of '${BGreen}`arrayJoinBy "," branches[@]`${NC}' with ${BWhite}${project_remote} ${project_name}${NC}... ${BGreen}started${NC}"
+            ;;
+            end)
+                echo -e "\n\n${BWhite}Synchronization${NC} of '${BGreen}`arrayJoinBy "," branches[@]`${NC}' with ${BWhite}${project_remote} ${project_name}${NC}... ${BGreen}finished${NC}"
+            ;;
+            vars)
+                echo -e "\n-------------------------------------------------------------"
+                echo -e "| git_repositories_root  : ${BWhite}${git_repositories_root}${NC}"
+                echo -e "| project_name           : ${BWhite}${project_name}${NC}"
+                echo -e "| local_repository_path  : ${BWhite}${local_repository_path}${NC}"
+                echo -e "| branches               : ${BWhite}$(arrayJoinBy "," branches[@])${NC}"
+                echo -e "| actual_branch          : ${BWhite}${actual_branch}${NC}"
+                echo -e "| project_remote         : ${BWhite}${project_remote}${NC}"
+                echo -e "| fork_remote            : ${BWhite}${fork_remote}${NC}"
+                echo -e "-------------------------------------------------------------\n"
+            ;;
+            missingRemote)
+                local remote="$2"
+                echo -e "\t${BRed}>>> FATAL:${NC} Remote ${BWhite}${remote}${NC} does not exist ${BRed}!!!${NC}"
+                echo -e "\tAdd remote with:"
+                echo -e "\t\tgit remote add <REMOTE_NAME> <REMOTE_URL>"
+                echo -e "\t\tgit remote add ${remote} git@github.ibm.com:IBMKC/${project_name}.git"
+            ;;
+            *)
+                echo "${BRed}ERR: Sorry, I don't understand${NC}"
+            ;;
+        esac
+    fi
+}
+
+function gitRemoteExist {
     local repository=$2
     cd $repository
     local remoteList=`git remote -v`
-    if [[ $remoteList == *"$1"* ]]; then
+    if [[ "$remoteList" == *"$1"* ]]; then
         return 0;
     else
         return 1;
     fi
-}
-
-function arrayJoinBy {
-    local param1=$1
-    local param2=("${!2}")
-    IFS=$param1
-    echo "${param2[*]// /|}"
-    IFS=$' \t\n'
-}
-
-function printlnSeparator {
-    echo "============================================================="
-    echo "Sync started: '`date`'"
-}
-
-function printVars {
-    echo -e "\n-------------------------------------------------------------"
-    echo -e "| local_repos_dir        : ${BWhite}${local_repos_dir}${NC}"
-    echo -e "| repo_name              : ${BWhite}${repo_name}${NC}"
-    echo -e "| repo_path              : ${BWhite}${repo_path}${NC}"
-    echo -e "| branches               : ${BWhite}`arrayJoinBy "," branches[@]`${NC}"
-    echo -e "| branch_remote_tracking : ${BWhite}${branch_remote_tracking}${NC}"
-    echo -e "| git_remote             : ${BWhite}${git_remote}${NC}"
-    echo -e "-------------------------------------------------------------\n"
-}
-
-function printMissingRemote {
-    local remote="$1"
-    echo -e "\t${BRed}>>> FATAL:${NC} Remote ${BWhite}${remote}${NC} does not exist ${BRed}!!!${NC}"
-    echo -e "\tAdd remote with:"
-    echo -e "\t\tgit remote add <REMOTE_NAME> <REMOTE_URL>"
-    echo -e "\t\tgit remote add ${remote} git@github.ibm.com:IBMKC/${repo_name}.git"
 }
 
 function gitCheckout {
@@ -85,6 +127,11 @@ function gitPush {
     git push -u ${remote} ${branch}
 }
 
+function gitGetActualCheckedOutBranch {
+    local branch=`git branch | grep \* | cut -d ' ' -f2-`
+    echo $branch
+}
+
 function synchBranch {
     local branch="$1"
     local remote_fork="$2"
@@ -95,34 +142,56 @@ function synchBranch {
     gitPush ${remote_fork} ${branch}
 }
 
+# << Abracadabra! Here's a the magic trick >>
+function sync {
+    for branch in "${branches[@]}"
+    do
+        echo -e "\n\n${BYellow}Start${NC} ${BWhite}synchronizing${NC} '${BGreen}${branch}${NC}' of '${BRed}${project_name}${NC}' with '${BRed}${project_remote}${NC}'..."
+        synchBranch "${branch}" "${fork_remote}" "${project_remote}"
+        echo -e "\nFinished ${BWhite}synchronizing${NC} '${BWhite}${branch}${NC}' of '${BRed}${project_name}${NC}' with '${BRed}${project_remote}${NC}'..."
+    done
+}
+
+function setUp {
+    # date time separator
+    log "separator"
+    
+    # switch to repository dir
+    cd $local_repository_path
+    
+    # get actual checked out branch
+    actual_branch="$(gitGetActualCheckedOutBranch)"
+    
+    # check for remote upstream in local repo
+    if ! gitRemoteExist "$project_remote" "`pwd`" ; then
+        log "missingRemote" "$project_remote"
+        exit 1
+    fi
+    
+    # print input variables
+    log "vars"
+    
+    # app start log
+    log "start"
+}
+
+function tearDown {
+    echo -e "\n\n> ${BWhite}Checking out${NC} previously active branch: '${BRed}${actual_branch}${NC}'"
+    git checkout ${actual_branch}
+    
+    # app end log
+    log "end"
+}
+
 # ========================
 # =        Main          =
 # ========================
 
-# Log separator
-printlnSeparator
-
-# print input variables
-printVars
-cd ${repo_path}
-echo -e "${BWhite}Synchronization${NC} of '${BGreen}`arrayJoinBy "," branches[@]`${NC}' with ${BWhite}${git_remote} ${repo_name}${NC}... ${BGreen}started${NC}"
-
-# check for remote upstream in local repo
-if ! existRemote "${git_remote}" "`pwd`" ; then
-    printMissingRemote "${git_remote}"
-    exit 1
-fi
+# Set up
+setUp
 
 # sync of all branches
-for branch in "${branches[@]}"
-do
-    echo -e "\n${BYellow}Start${NC} ${BWhite}synchronizing${NC} '${BGreen}${branch}${NC}' of '${BRed}${repo_name}${NC}' with '${BRed}${git_remote}${NC}'..."
-    synchBranch "${branch}" "${branch_remote_tracking}" "${git_remote}"
-    echo -e "\nFinished ${BWhite}synchronizing${NC} '${BWhite}${branch}${NC}' of '${BRed}${repo_name}${NC}' with '${BRed}${git_remote}${NC}'..."
-done
+sync
 
-# checkout default branch at the end
-echo -e "\n> ${BWhite}Checking out${NC} default branch: '${BRed}${default_branch}${NC}'"
-git checkout ${default_branch}
-
-echo -e "\n${BWhite}Synchronization${NC} of '${BGreen}`arrayJoinBy "," branches[@]`${NC}' with ${BWhite}${git_remote} ${repo_name}${NC}... ${BGreen}finished${NC}"
+# Tear down
+tearDown
