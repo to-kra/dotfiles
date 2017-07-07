@@ -47,6 +47,8 @@ if isMacOs ; then
   brewInstall 'rsync'
   # Wget
   brewInstall 'wget'
+  # sshpass
+  #brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
 
   ########################## System tools
   # jEnv - Manage your Java environment http://www.jenv.be/
