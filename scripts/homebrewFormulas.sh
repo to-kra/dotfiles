@@ -23,6 +23,8 @@ if isMacOs ; then
   brewInstall 'vert.x'
   # phantomjs
   brewInstall 'phantomjs'
+  # yarn
+  brewInstall 'yarn'
 
   ########################## Build tools
   # Ant

@@ -38,6 +38,9 @@ source $workingDir/scripts/homebrewCaskVersions.sh
 # install npm apps
 source $workingDir/scripts/npmInstall.sh
 
+# install yarn apps
+source $workingDir/scripts/yarnInstall.sh
+
 #####################################################################
 # Ubuntu : apt
 source $workingDir/scripts/ubuntuAptInstall.sh
