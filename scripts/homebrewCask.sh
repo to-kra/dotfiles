@@ -41,6 +41,8 @@ if isMacOs ; then
   brewCaskInstall 'wkhtmltopdf'
   # mongodb
   brewCaskInstall 'mongodb'
+  # p4merge
+  brewCaskInstall 'p4merge'
 
   ########################## System utils
   # App Zapper

@@ -25,3 +25,8 @@ function arrayJoinBy {
     echo "${array[*]// /|}"
     IFS=$' \t\n'
 }
+
+function arrayLength {
+    local array=("${!1}")
+    echo ${#array[*]} 
+}

@@ -14,8 +14,12 @@ source $my_dir/yarnTools.sh
 #####################################################################
 
 if isMacOs ; then
-    # react native
+    # react
     yarnGlobalAdd 'create-react-app'
+    # react native
+    yarnGlobalAdd 'create-react-native-app'
     # node fix
     yarnGlobalAdd 'node-gyp'
+    # expo.io
+    yarnGlobalAdd 'exp'
 fi
