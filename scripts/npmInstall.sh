@@ -23,4 +23,8 @@ if isMacOs ; then
     
     npmInstallGlobal 'resume-cli'
     npmInstallGlobal 'gulp-cli'
+    #https://github.com/nexe/nexe
+    npmInstallGlobal 'nexe'
+    #https://expressjs.com/en/starter/generator.html
+    npmInstallGlobal 'express-generator'
 fi
