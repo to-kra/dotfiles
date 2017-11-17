@@ -25,6 +25,8 @@ if isMacOs ; then
   brewInstall 'phantomjs'
   # yarn
   brewInstall 'yarn'
+  # mongodb
+  brewInstall 'mongodb'
 
   ########################## Build tools
   # Ant

@@ -39,8 +39,6 @@ if isMacOs ; then
   brewCaskInstall 'intellij-idea-ce'
   # https://wkhtmltopdf.org/
   brewCaskInstall 'wkhtmltopdf'
-  # mongodb
-  brewCaskInstall 'mongodb'
   # p4merge
   brewCaskInstall 'p4merge'
 
