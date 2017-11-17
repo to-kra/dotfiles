@@ -27,7 +27,13 @@ if isMacOs ; then
   brewInstall 'yarn'
   # mongodb
   brewInstall 'mongodb'
-
+  # bash debug
+  brewInstall 'bashdb'
+  
+  ########################## Test tools
+  # A TAP-compliant test framework for Bash scripts https://github.com/sstephenson/bats
+  brewInstall 'bats'
+  
   ########################## Build tools
   # Ant
   brewInstall 'ant'
@@ -35,7 +41,7 @@ if isMacOs ; then
   brewInstall 'gradle'
   # Maven
   brewInstall 'maven'
-
+  
   ########################## Daily use cli tools
   # git
   brewInstall 'git'
@@ -53,9 +59,9 @@ if isMacOs ; then
   brewInstall 'wget'
   # sshpass
   #brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
-
+  
   ########################## System tools
   # jEnv - Manage your Java environment http://www.jenv.be/
   brewInstall 'jenv'
   brewInstall 'gnuplot'
-fi 
+fi
