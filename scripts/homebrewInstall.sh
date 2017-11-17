@@ -28,6 +28,7 @@ brewCaskList=''
 brewTapList=''
 if isMacOs ; then
   brewList=`brew list`
+  #brewListVersions=`brew list --versions`
   brewCaskList=`brew cask list`
   #brewTapList=`brew tap`
 fi

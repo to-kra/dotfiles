@@ -1,5 +1,18 @@
 #!/bin/bash
+# resolve currentDirectory even if symlink
+source="${BASH_SOURCE[0]}"
+while [ -h "$source" ]; do # resolve $source until the file is no longer a symlink
+  currentDirectory="$( cd -P "$( dirname "$source" )" && pwd )"
+  source="$(readlink "$source")"
+  [[ $source != /* ]] && source="$currentDirectory/$source" # if $source was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+my_dir="$( cd -P "$( dirname "$source" )" && pwd )"
+
+source $my_dir/shellTools.sh
+source $my_dir/macOsTools.sh
+#####################################################################
 # brew additional functions
+
 function brewContains () {
   if [[ $brewList == *"$1"* ]]; then
     #echo "Formula: $1 exists :-)"
@@ -50,4 +63,37 @@ function brewCaskVersionsInstall () {
     printf 'Installation:\n> [macOs] BREW CASKroom/Versions installing: %s\n' "$1"
     brew install caskroom/versions/"$1"
   fi
+}
+
+function brewGetPackageVersion {
+  if ! stringIsEmpty "$1"; then
+    PACKAGE="$1"
+    VERSION=`brew list --versions | grep $PACKAGE | rev | cut -d " " -f1 | rev | xargs`
+    echo $VERSION
+  fi
+}
+
+function brewExportHome {
+  if ! stringIsEmpty "$1"; then
+    if brewContains "$1" ; then
+      VERSION=`brewGetPackageVersion "$1"`
+      VAR_NAME="`stringToUpperCase $1`_HOME"
+      VAR_VALUE="/usr/local/Cellar/$1/$VERSION/"
+      # echo "Declaring: name=${VAR_NAME}, value=${VAR_VALUE}"
+      export ${VAR_NAME}=${VAR_VALUE}
+      # printenv ${VAR_NAME}
+    fi
+  fi
+}
+
+function brewGetLatestPackageHomePath {
+  LINK=`brew --prefix $1`
+  # echo $LINK
+  RESOLVED_LINK=`ls -l $LINK | sed "s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g"` #sed fix: removes color
+  # echo "Resolved link: "$RESOLVED_LINK
+  CELLAR_LINK=`echo $RESOLVED_LINK | rev | cut -d">" -f1 | rev | sed 's/\.\.//g' | xargs`
+  # echo "Cellar link: $(tput sgr0)$CELLAR_LINK"
+  FIXED_CELLAR=`stringRemovePrefix $CELLAR_LINK "/"`
+  # echo "Fixed cellar: $FIXED_CELLAR"
+  echo /usr/local/${FIXED_CELLAR}
 }
