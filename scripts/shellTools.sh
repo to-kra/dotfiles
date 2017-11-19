@@ -115,3 +115,11 @@ function arrayLength {
   local array=("${!1}")
   echo ${#array[*]}
 }
+
+function variableExists {
+  if ! [ -z "$1" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
