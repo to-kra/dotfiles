@@ -23,12 +23,12 @@ if isMacOs ; then
 fi
 
 # Variables for homebrew to speed up functions
-brewList=''
-brewCaskList=''
-brewTapList=''
 if isMacOs ; then
-  brewList=`brew list`
-  #brewListVersions=`brew list --versions`
-  brewCaskList=`brew cask list`
+  #brewList=`brew list`
+  brewListVersions="`brew list --versions`"
+  #brewCaskList=`brew cask list`
+  brewCaskListVersions="`brew cask list --versions`"
   #brewTapList=`brew tap`
+  BREW_HOME='/usr/local/Cellar'
+  CASK_HOME='/usr/local/Caskroom'
 fi

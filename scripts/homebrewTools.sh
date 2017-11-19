@@ -13,8 +13,10 @@ source $my_dir/macOsTools.sh
 #####################################################################
 # brew additional functions
 
-function brewContains () {
-  if [[ $brewList == *"$1"* ]]; then
+function brewContains {
+  FILTER_APP=`echo "$brewListVersions" | grep "$1" | cut -d" " -f1`
+  #echo "Filtered from brew: $FILTER_APP"
+  if [[ $FILTER_APP == *"$1"* ]]; then
     #echo "Formula: $1 exists :-)"
     return 0;
   else
@@ -22,8 +24,11 @@ function brewContains () {
     return 1;
   fi
 }
-function brewCaskContains () {
-  if [[ $brewCaskList == *"$1"* ]]; then
+
+function brewCaskContains {
+  FILTER_APP=`echo "$brewCaskListVersions" | grep "$1" | cut -d" " -f1`
+  #echo "Filtered from cask: $FILTER_APP"
+  if [[ $FILTER_APP == *"$1"* ]]; then
     #echo "Cask: $1 exists..."
     return 0;
   else
@@ -31,6 +36,7 @@ function brewCaskContains () {
     return 1;
   fi
 }
+
 # function brewTapContains () {
 #   if [[ $brewTapList == *"$1"* ]]; then
 #     #echo "Tap: $1 exists..."
@@ -40,25 +46,29 @@ function brewCaskContains () {
 #     return 1;
 #   fi
 # }
-function brewInstall () {
+
+function brewInstall {
   if ! brewContains "$1" ; then
     printf 'Installation:\n> [macOs] BREW installing: %s\n' "$1"
     brew install "$1"
   fi
 }
-function brewCaskInstall () {
+
+function brewCaskInstall {
   if ! brewCaskContains "$1" ; then
     printf 'Installation:\n> [macOs] BREW CASK installing: %s\n' "$1"
     brew cask install "$1"
   fi
 }
+
 # function brewTap () {
 #   if ! brewTapContains "$1" ; then
 #     printf 'Installation:\n> [macOs] BREW TAP adding repository: %s\n' "$1"
 #     brew tap "$1"
 #   fi
 # }
-function brewCaskVersionsInstall () {
+
+function brewCaskVersionsInstall {
   if ! brewCaskContains "$1" ; then
     printf 'Installation:\n> [macOs] BREW CASKroom/Versions installing: %s\n' "$1"
     brew install caskroom/versions/"$1"
@@ -68,7 +78,15 @@ function brewCaskVersionsInstall () {
 function brewGetPackageVersion {
   if ! stringIsEmpty "$1"; then
     PACKAGE="$1"
-    VERSION=`brew list --versions | grep $PACKAGE | rev | cut -d " " -f1 | rev | xargs`
+    VERSION=`echo "$brewListVersions" | grep $PACKAGE | rev | cut -d " " -f1 | rev | xargs`
+    echo $VERSION
+  fi
+}
+
+function brewCaskGetPackageVersion {
+  if ! stringIsEmpty "$1"; then
+    PACKAGE="$1"
+    VERSION=`echo "$brewCaskListVersions" | grep $PACKAGE | rev | cut -d " " -f1 | rev | xargs`
     echo $VERSION
   fi
 }
@@ -77,11 +95,34 @@ function brewExportHome {
   if ! stringIsEmpty "$1"; then
     if brewContains "$1" ; then
       VERSION=`brewGetPackageVersion "$1"`
-      VAR_NAME="`stringToUpperCase $1`_HOME"
-      VAR_VALUE="/usr/local/Cellar/$1/$VERSION/"
-      # echo "Declaring: name=${VAR_NAME}, value=${VAR_VALUE}"
+      VAR_NAME=""
+      if stringIsEmpty "$2"; then
+        VAR_NAME="`stringToUpperCase $1`_HOME"
+      else # if name passed to this function
+        VAR_NAME="`stringToUpperCase $2`"
+      fi
+      VAR_VALUE="$BREW_HOME/$1/$VERSION/"
+      #echo "Declaring Brew App Home: name=${VAR_NAME}, value=${VAR_VALUE}"
       export ${VAR_NAME}=${VAR_VALUE}
-      # printenv ${VAR_NAME}
+      #printenv ${VAR_NAME}
+    fi
+  fi
+}
+
+function brewCaskExportHome {
+  if ! stringIsEmpty "$1"; then
+    if brewCaskContains "$1" ; then
+      VERSION=`brewCaskGetPackageVersion "$1"`
+      VAR_NAME=""
+      if stringIsEmpty "$2"; then
+        VAR_NAME="`stringToUpperCase $1`_HOME"
+      else # if name passed to this function
+        VAR_NAME="`stringToUpperCase $2`"
+      fi
+      VAR_VALUE="$CASK_HOME/$1/$VERSION/"
+      #echo "Declaring Cask App Home: name=${VAR_NAME}, value=${VAR_VALUE}"
+      export ${VAR_NAME}=${VAR_VALUE}
+      #printenv ${VAR_NAME}
     fi
   fi
 }
