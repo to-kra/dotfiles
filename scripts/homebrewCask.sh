@@ -19,6 +19,8 @@ if isMacOs ; then
   ########################## Development tools
   # Android SDK
   brewCaskInstall 'android-sdk'
+  # Android NDK
+  brewCaskInstall 'android-ndk'
   # Docker toolbox
   brewCaskInstall 'docker-toolbox'
   # Java 8
@@ -41,7 +43,7 @@ if isMacOs ; then
   brewCaskInstall 'wkhtmltopdf'
   # p4merge
   brewCaskInstall 'p4merge'
-
+  
   ########################## System utils
   # App Zapper
   brewCaskInstall 'appzapper'
@@ -57,7 +59,7 @@ if isMacOs ; then
   brewCaskInstall 'xtrafinder'
   # Tuxera NTFS
   brewCaskInstall 'tuxera-ntfs'
-
+  
   ########################## Tools for daily use
   # Google Chrome
   brewCaskInstall 'google-chrome'
@@ -77,17 +79,17 @@ if isMacOs ; then
   brewCaskInstall 'teamviewer'
   # XN View MP
   brewCaskInstall 'xnviewmp'
-  # Zoom.us 
+  # Zoom.us
   brewCaskInstall 'zoomus'
   # Real VNC
   brewCaskInstall 'real-vnc'
   # Skype
   brewCaskInstall 'skype'
-
+  
   ########################## Tools for fun & pleasure
   # Spotify
   brewCaskInstall 'spotify'
-  # Djay pro 
+  # Djay pro
   brewCaskInstall 'djay-pro'
   # Kid3
   brewCaskInstall 'kid3'
@@ -107,7 +109,7 @@ if isMacOs ; then
   brewCaskInstall 'handbrake'
   # cakebrew
   brewCaskInstall 'cakebrew'
-
+  
   ########################## Tools for use with NAS
   # Trasmission Remote Gui
   brewCaskInstall 'transmission-remote-gui'
