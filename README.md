@@ -14,3 +14,12 @@ I know there are lots of such projects, but I wanted to make my own to improve &
 * Caskroom Versions
 * NPM
 * Yarn
+
+## Unit tests:
+* [Nov2017] Started using [Bats: Bash Automated Testing System](https://github.com/sstephenson/bats) for testing my utils/helpers scripts. 
+
+# Change log:
+* [2017-Nov-17]: Bats unit tests
+* [2017-Nov-19]: Added exporting app homes using brew/cask
+* [2017-Nov-19]: moved exporting paths out of .bash_profile to paths.sh
+* [2017-Nov-19]: refactor/update of hombrewTools.sh
