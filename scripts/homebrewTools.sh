@@ -101,7 +101,7 @@ function brewExportHome {
       else # if name passed to this function
         VAR_NAME="`stringToUpperCase $2`"
       fi
-      VAR_VALUE="$BREW_HOME/$1/$VERSION/"
+      VAR_VALUE="$BREW_HOME/$1/$VERSION"
       #echo "Declaring Brew App Home: name=${VAR_NAME}, value=${VAR_VALUE}"
       export ${VAR_NAME}=${VAR_VALUE}
       #printenv ${VAR_NAME}
@@ -119,7 +119,7 @@ function brewCaskExportHome {
       else # if name passed to this function
         VAR_NAME="`stringToUpperCase $2`"
       fi
-      VAR_VALUE="$CASK_HOME/$1/$VERSION/"
+      VAR_VALUE="$CASK_HOME/$1/$VERSION"
       #echo "Declaring Cask App Home: name=${VAR_NAME}, value=${VAR_VALUE}"
       export ${VAR_NAME}=${VAR_VALUE}
       #printenv ${VAR_NAME}
