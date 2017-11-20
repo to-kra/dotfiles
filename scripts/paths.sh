@@ -10,6 +10,8 @@ while [ -h "$source" ]; do # resolve $source until the file is no longer a symli
 done
 workingDir="$( cd -P "$( dirname "$source" )" && pwd )"
 
+source $workingDir/fileSystem.sh
+MAIN_DIR=`1dirUp $workingDir`
 #-------------------------------------------------------------
 # Exporting paths
 #-------------------------------------------------------------
@@ -17,9 +19,9 @@ export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
 
 # dotfiles
-export PATH=$workingDir/scripts:$PATH
-export PATH=$workingDir/bin:$PATH
-export PATH=$workingDir/bin/work:$PATH
+export PATH=$MAIN_DIR/scripts:$PATH
+export PATH=$MAIN_DIR/bin:$PATH
+export PATH=$MAIN_DIR/bin/work:$PATH
 
 if isMacOs ; then
   # to avoid locale warning over ssh
