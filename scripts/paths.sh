@@ -10,8 +10,9 @@ while [ -h "$source" ]; do # resolve $source until the file is no longer a symli
 done
 workingDir="$( cd -P "$( dirname "$source" )" && pwd )"
 
+source $workingDir/common.sh
 source $workingDir/fileSystem.sh
-MAIN_DIR=`1dirUp $workingDir`
+MAIN_DIR=$(1dirUp $workingDir)
 #-------------------------------------------------------------
 # Exporting paths
 #-------------------------------------------------------------
@@ -47,7 +48,7 @@ if isMacOs ; then
   ## SCM tool
   export PATH=/opt/jazz/scmtools/eclipse:$PATH
   ## NPM
-  export NPM=`which npm`
+  export NPM=$(which npm)
   
   #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
   export SDKMAN_DIR="/Users/tokra/.sdkman"
@@ -59,4 +60,5 @@ if variableExists $ANDROID_HOME ; then
   #export PATH=$ANDROID_HOME/build-tools/19.1.0:$PATH
   export PATH=$ANDROID_HOME/platform-tools:$PATH
   export PATH=$ANDROID_HOME/tools:$PATH
+  export PATH=$ANDROID_HOME/build-tools/$(getAndroidBuildToolsVersion):$PATH
 fi
