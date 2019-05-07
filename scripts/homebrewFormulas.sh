@@ -18,17 +18,17 @@ if isMacOs ; then
   # groovy
   brewInstall 'groovy'
   # node.js
-  brewInstall 'node'
-  # vert.x
-  brewInstall 'vert.x'
+  brewInstall 'node@10'
   # phantomjs
   brewInstall 'phantomjs'
   # yarn
   brewInstall 'yarn'
-  # mongodb
-  brewInstall 'mongodb'
   # bash debug
   brewInstall 'bashdb'
+  # kafka
+  brewInstall 'kafka'
+  # scala
+  brewInstall 'scala'
   
   ########################## Test tools
   # A TAP-compliant test framework for Bash scripts https://github.com/sstephenson/bats
@@ -52,7 +52,7 @@ if isMacOs ; then
   # Python
   brewInstall 'python'
   # Python3
-  brewInstall 'python3'
+  #brewInstall 'python3'
   # Rsync
   brewInstall 'rsync'
   # Wget

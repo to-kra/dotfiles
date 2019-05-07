@@ -22,5 +22,5 @@ if isMacOs ; then
   # ANDROID_HOME
   brewCaskExportHome 'android-sdk' 'ANDROID_HOME'
   # ANDROID_NDK_HOME
-  brewCaskExportHome 'android-ndk' 'ANDROID_NDK_HOME'
+  #brewCaskExportHome 'android-ndk' 'ANDROID_NDK_HOME'
 fi

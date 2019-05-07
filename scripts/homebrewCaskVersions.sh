@@ -18,5 +18,7 @@ source $my_dir/homebrewTools.sh
 if isMacOs ; then
   ########################## Development tools
   # Java 7
-  brewCaskVersionsInstall 'java7'
+  brewCaskVersionsInstall 'zulu7'
+  # openjdk8
+  brewCaskVersionsInstall 'adoptopenjdk8'
 fi

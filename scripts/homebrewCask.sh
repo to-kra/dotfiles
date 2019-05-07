@@ -19,8 +19,8 @@ if isMacOs ; then
   ########################## Development tools
   # Android SDK
   brewCaskInstall 'android-sdk'
-  # Android NDK
-  brewCaskInstall 'android-ndk'
+  # Android platform tools
+  brewCaskInstall 'android-platform-tools'
   # Docker toolbox
   brewCaskInstall 'docker-toolbox'
   # Java 8
@@ -41,9 +41,15 @@ if isMacOs ; then
   brewCaskInstall 'intellij-idea-ce'
   # https://wkhtmltopdf.org/
   brewCaskInstall 'wkhtmltopdf'
-  # p4merge
-  brewCaskInstall 'p4merge'
-  
+  # Postman
+  brewCaskInstall 'postman'
+  # Arduino IDE
+  brewCaskInstall 'arduino'
+  # MongoDB 
+  brewCaskInstall 'mongodb'
+  # MongoDB Compass
+  brewCaskInstall 'mongodb-compass'
+
   ########################## System utils
   # App Zapper
   brewCaskInstall 'appzapper'
@@ -51,20 +57,14 @@ if isMacOs ; then
   brewCaskInstall 'bettertouchtool'
   # gfx card status
   brewCaskInstall 'gfxcardstatus'
-  # Mac ports
-  brewCaskInstall 'macports'
   # smc fan control
   brewCaskInstall 'smcfancontrol'
-  # XtraFinder
-  brewCaskInstall 'xtrafinder'
   # Tuxera NTFS
   brewCaskInstall 'tuxera-ntfs'
   
   ########################## Tools for daily use
   # Google Chrome
   brewCaskInstall 'google-chrome'
-  # Google Drive
-  brewCaskInstall 'google-drive'
   # Mozilla Firefox
   brewCaskInstall 'firefox'
   # Filezilla
@@ -81,8 +81,6 @@ if isMacOs ; then
   brewCaskInstall 'xnviewmp'
   # Zoom.us
   brewCaskInstall 'zoomus'
-  # Real VNC
-  brewCaskInstall 'real-vnc'
   # Skype
   brewCaskInstall 'skype'
   
