@@ -58,6 +58,10 @@ source $workingDir/scripts/javaInstall.sh
 source $workingDir/scripts/devToolsInstall.sh
 
 #####################################################################
+# Autocompletion: ibmcloud
+source $workingDir/scripts/autocompletion.sh
+
+#####################################################################
 # Paths
 source $workingDir/scripts/paths.sh
 
