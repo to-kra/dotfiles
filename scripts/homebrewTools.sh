@@ -54,6 +54,15 @@ function brewInstall {
   fi
 }
 
+function brewInstallFromGit {
+  DELIMITER=/
+  BINARY=`splitLast $1 $DELIMITER`
+  if ! brewContains "$BINARY" ; then
+    printf 'Installation:\n> [macOs] BREW installing: %s\n' "$1"
+    brew install "$1"
+  fi
+}
+
 function brewCaskInstall {
   if ! brewCaskContains "$1" ; then
     printf 'Installation:\n> [macOs] BREW CASK installing: %s\n' "$1"

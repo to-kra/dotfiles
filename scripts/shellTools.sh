@@ -123,3 +123,18 @@ function variableExists {
     return 1
   fi
 }
+
+function commandExists {
+  if ! [ -x "$(command -v $1)" ]; then
+    echo 'Error: $1 is not installed.' >&2
+    return 1
+  else
+    return 0
+  fi
+}
+
+function splitLast {
+  STRING=$1
+  DELIMITER=$2
+  echo "$STRING" | rev | cut -d"$DELIMITER" -f 1 | rev
+}

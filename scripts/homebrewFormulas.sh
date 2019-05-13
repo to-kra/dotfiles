@@ -29,6 +29,8 @@ if isMacOs ; then
   brewInstall 'kafka'
   # scala
   brewInstall 'scala'
+  # Apache OpenWhisk
+  brewInstallFromGit 'ssx/wsk/wsk'
   
   ########################## Test tools
   # A TAP-compliant test framework for Bash scripts https://github.com/sstephenson/bats

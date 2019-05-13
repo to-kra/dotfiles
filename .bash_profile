@@ -17,6 +17,9 @@ source $workingDir/scripts/os.sh
 ### main
 
 #####################################################################
+# Shell: Install apps from remote using SH
+source $workingDir/scripts/shellAppsInstaller.sh
+
 # Mac : Homebrew
 source $workingDir/scripts/homebrewInstall.sh
 
