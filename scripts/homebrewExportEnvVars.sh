@@ -18,9 +18,9 @@ if isMacOs ; then
   brewExportHome 'gradle'
 fi
 # Mac Homebrew Cask: App HOME's
-if isMacOs ; then
+#if isMacOs ; then
   # ANDROID_HOME
-  brewCaskExportHome 'android-sdk' 'ANDROID_HOME'
+  # brewCaskExportHome 'android-sdk' 'ANDROID_HOME'
   # ANDROID_NDK_HOME
   #brewCaskExportHome 'android-ndk' 'ANDROID_NDK_HOME'
-fi
+#fi

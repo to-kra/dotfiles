@@ -40,8 +40,6 @@ if isMacOs ; then
   
   #-------------------------------------------------------------
   # Work specific
-  ## SCM tool
-  export PATH=/opt/jazz/scmtools/eclipse:$PATH
   ## NPM
   export NPM=$(which npm)
   
@@ -50,7 +48,8 @@ if isMacOs ; then
   [[ -s "/Users/tokra/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/tokra/.sdkman/bin/sdkman-init.sh"
 fi
 
- # Android: Mac specific
+# Android: Mac specific
+  export ANDROID_HOME="/usr/local/share/android-sdk"
   #ANDROID_SDK_VERSION=`brew cask info android-sdk | grep android-sdk: | cut -d':' -f2 | xargs`
   #ANDROID_HOME="/usr/local/Cellar/android-sdk/$ANDROID_SDK_VERSION"
   #export ANDROID_HOME=$ANDROID_HOME
