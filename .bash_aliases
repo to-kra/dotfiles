@@ -43,14 +43,20 @@ alias cd..='cd ..'
 alias cs....='cd ../..'
 alias cls='clear'
 alias clr='clear'
+alias rmrf='rm -rf'
 
 # dev
 alias gi='git'
 alias gs='git status'
 alias gc='git commit'
+alias gcm='git commit -m'
 alias ga='git add'
+alias gaa='git add .'
 alias docker_jenkins='docker run -p 8080:8080 -p 50000:50000 -v /Users/tokra/jenkins_home:/var/jenkins_home jenkins'
-alias wgetkc='wget --user-agent="IBM_Knowledge_Center/1.8"'
+alias i='ibmcloud'
+alias ic='ibmcloud'
+alias w='wsk'
+alias y='yarn'
 
 # tools
 alias cp_rsync='rsync -aP'
