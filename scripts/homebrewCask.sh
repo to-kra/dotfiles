@@ -36,7 +36,7 @@ if isMacOs ; then
   # Source Tree
   brewCaskInstall 'sourcetree'
   # Virtual Box
-  brewCaskInstall 'virtualbox'
+  #brewCaskInstall 'virtualbox'
   # IntelliJ IDEA Community Edition
   brewCaskInstall 'intellij-idea-ce'
   # https://wkhtmltopdf.org/
@@ -49,6 +49,18 @@ if isMacOs ; then
   brewCaskInstall 'mongodb'
   # MongoDB Compass
   brewCaskInstall 'mongodb-compass'
+  # PhantomJS
+  brewCaskInstall 'phantomjs'
+  # Andry IP Scanner
+  brewCaskInstall 'angry-ip-scanner'
+  # eclipse-ide
+  brewCaskInstall 'eclipse-ide'
+  # eclipse-java
+  brewCaskInstall 'eclipse-java'
+  # eclipse-jee
+  brewCaskInstall 'eclipse-jee'
+  # Expo xde
+  brewCaskInstall 'expo-xde'
 
   ########################## System utils
   # App Zapper
@@ -58,7 +70,7 @@ if isMacOs ; then
   # gfx card status
   brewCaskInstall 'gfxcardstatus'
   # smc fan control
-  brewCaskInstall 'smcfancontrol'
+  #brewCaskInstall 'smcfancontrol'
   # Tuxera NTFS
   brewCaskInstall 'tuxera-ntfs'
   
@@ -67,10 +79,8 @@ if isMacOs ; then
   brewCaskInstall 'google-chrome'
   # Mozilla Firefox
   brewCaskInstall 'firefox'
-  # Filezilla
-  brewCaskInstall 'filezilla'
-  # Adobe Creative Cloud
-  brewCaskInstall 'adobe-creative-cloud'
+  # Brave browser
+  brewCaskInstall 'brave-browser'
   # Slack
   brewCaskInstall 'slack'
   # Skitch
@@ -83,6 +93,14 @@ if isMacOs ; then
   brewCaskInstall 'zoomus'
   # Skype
   brewCaskInstall 'skype'
+  # Authy
+  brewCaskInstall 'authy'
+  # 1password
+  brewCaskInstall '1password'
+  # Adobe Creative Cloud
+  brewCaskInstall 'adobe-creative-cloud'
+  # Turbo Boost Switcher
+  brewCaskInstall 'turbo-boost-switcher'
   
   ########################## Tools for fun & pleasure
   # Spotify
@@ -99,6 +117,8 @@ if isMacOs ; then
   brewCaskInstall 'viber'
   # Whats app
   brewCaskInstall 'whatsapp'
+  # Telegram
+  brewCaskInstall 'telegram'
   # VLC Media Player
   brewCaskInstall 'vlc'
   ## CANNOT INSTALL: Gopro Studio
@@ -107,6 +127,10 @@ if isMacOs ; then
   brewCaskInstall 'handbrake'
   # cakebrew
   brewCaskInstall 'cakebrew'
+  # The Unarchiver
+  brewCaskInstall 'the-unarchiver'
+  # Ledger Live
+  brewCaskInstall 'ledger-live'
   
   ########################## Tools for use with NAS
   # Trasmission Remote Gui

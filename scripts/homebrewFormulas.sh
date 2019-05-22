@@ -19,8 +19,6 @@ if isMacOs ; then
   brewInstall 'groovy'
   # node.js
   brewInstall 'node@10'
-  # phantomjs
-  brewInstall 'phantomjs'
   # yarn
   brewInstall 'yarn'
   # bash debug
@@ -61,7 +59,9 @@ if isMacOs ; then
   brewInstall 'wget'
   # sshpass
   #brew install https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
-  
+  # Midnight Commander
+  brewInstall 'midnight-commander'
+
   ########################## System tools
   # jEnv - Manage your Java environment http://www.jenv.be/
   brewInstall 'jenv'
