@@ -46,9 +46,8 @@ if isMacOs ; then
   #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
   export SDKMAN_DIR="/Users/tokra/.sdkman"
   [[ -s "/Users/tokra/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/tokra/.sdkman/bin/sdkman-init.sh"
-fi
 
-# Android: Mac specific
+  # Android: Mac specific
   export ANDROID_HOME="/usr/local/share/android-sdk"
   #ANDROID_SDK_VERSION=`brew cask info android-sdk | grep android-sdk: | cut -d':' -f2 | xargs`
   #ANDROID_HOME="/usr/local/Cellar/android-sdk/$ANDROID_SDK_VERSION"
@@ -57,6 +56,10 @@ fi
     launchctl setenv ANDROID_HOME $ANDROID_HOME
   fi
 
+  # NodeJS
+  export PATH="/usr/local/opt/node@10/bin:$PATH"
+fi
+
 # Android: General
 if variableExists $ANDROID_HOME ; then
   #export PATH=$ANDROID_HOME/build-tools/19.1.0:$PATH
@@ -64,6 +67,3 @@ if variableExists $ANDROID_HOME ; then
   export PATH=$ANDROID_HOME/tools:$PATH
   #export PATH=$ANDROID_HOME/build-tools/$(getAndroidBuildToolsVersion):$PATH
 fi
-
-# NodeJS
-export PATH="/usr/local/opt/node@10/bin:$PATH"

@@ -26,36 +26,36 @@ if isMacOs ; then
     export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 fi
 if isUbuntu ; then
-    aptAddRepo 'ppa:webupd8team/java'
+    # aptAddRepo 'ppa:webupd8team/java'
 
     # Java 6
-    JAVA6="oracle-java6-installer"
-    if ! isPackageInstalled "$JAVA6" ; then 
-        echo "$JAVA6 shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
-        aptGetInstall "$JAVA6"
-    fi
+    # JAVA6="oracle-java6-installer"
+    # if ! isPackageInstalled "$JAVA6" ; then 
+    #     echo "$JAVA6 shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
+    #     aptGetInstall "$JAVA6"
+    # fi
 
     # Java 7
     JAVA7="oracle-java7-installer"
-    if ! isPackageInstalled "$JAVA7" ; then 
-        echo "$JAVA7 shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
-        aptGetInstall "$JAVA7"
-    fi
+    #if ! isPackageInstalled "$JAVA7" ; then 
+    #    echo "$JAVA7 shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
+    #    aptGetInstall "$JAVA7"
+    # fi
 
     # Java 8
-    JAVA8="oracle-java8-installer"
-    if ! isPackageInstalled "$JAVA8" ; then 
-        echo "$JAVA8 shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
-        aptGetInstall "$JAVA8"
-        aptGetInstall 'oracle-java8-set-default'
-    fi
+    # JAVA8="oracle-java8-installer"
+    # if ! isPackageInstalled "$JAVA8" ; then 
+    #     echo "$JAVA8 shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
+    #     aptGetInstall "$JAVA8"
+    #     aptGetInstall 'oracle-java8-set-default'
+    # fi
     
     # JAVA_HOME
-    if ! hasEnvJavaHome ; then
-        printf "\nSetting JAVA_HOME\n"
-        JAVA_HOME="`getJavaHome 'java-8-oracle'`"
-        printf "JAVA_HOME=\"$JAVA_HOME\"\n" | sudo tee -a /etc/environment
-        source /etc/environment
-        printf "\nSetting JAVA_HOME... done\n"
-    fi
+    # if ! hasEnvJavaHome ; then
+    #     printf "\nSetting JAVA_HOME\n"
+    #     JAVA_HOME="`getJavaHome 'java-8-oracle'`"
+    #     printf "JAVA_HOME=\"$JAVA_HOME\"\n" | sudo tee -a /etc/environment
+    #     source /etc/environment
+    #     printf "\nSetting JAVA_HOME... done\n"
+    # fi
 fi
