@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ##### Constants
-username="guest"
-server="192.168.2.50"
+# username="guest"
+server="tower"
 local_mount_point_root="/Volumes"
 
 #Create the mount point:

@@ -31,6 +31,8 @@ if isMacOs ; then
   brewInstallFromGit 'ssx/wsk/wsk'
   # jq
   brewInstall 'jq'
+  # shellcheck
+  brewInstall 'shellcheck'
 
   
   ########################## Test tools

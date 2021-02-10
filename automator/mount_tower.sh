@@ -2,7 +2,7 @@
 
 ##### Constants
 username="guest"
-server="192.168.2.50"
+server="tower"
 local_mount_point_root=/Volumes
 
 #Create the mount point:
@@ -16,7 +16,7 @@ do
         echo "Creating: $local_mount_point"
         sudo mkdir -p $local_mount_point
     fi
-
+    
     # mount share
     echo "Mounting: smb://${server}/${share} to: $local_mount_point ..."
     sudo mount_smbfs -N //${username}@${server}/${share} $local_mount_point

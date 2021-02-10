@@ -4,9 +4,9 @@
 # resolve currentDirectory even if symlink
 source="${BASH_SOURCE[0]}"
 while [ -h "$source" ]; do # resolve $source until the file is no longer a symlink
-  currentDirectory="$( cd -P "$( dirname "$source" )" && pwd )"
-  source="$(readlink "$source")"
-  [[ $source != /* ]] && source="$currentDirectory/$source" # if $source was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+    currentDirectory="$( cd -P "$( dirname "$source" )" && pwd )"
+    source="$(readlink "$source")"
+    [[ $source != /* ]] && source="$currentDirectory/$source" # if $source was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 done
 workingDir="$( cd -P "$( dirname "$source" )" && pwd )"
 
@@ -71,8 +71,7 @@ source $workingDir/scripts/paths.sh
 #####################################################################
 # Alias definitions
 if [ -f ~/.bash_aliases ]; then
-  source ~/.bash_aliases
+    source ~/.bash_aliases
 else
-  source $workingDir/.bash_aliases
+    source $workingDir/.bash_aliases
 fi
-

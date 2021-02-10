@@ -14,9 +14,9 @@ function computeOs () {
         if [[ "$ubuntu_str" == 'Ubuntu' ]]; then
             isUbuntu=true
         fi
-    elif [[ "$unamestr" == 'Darwin' ]]; then
+        elif [[ "$unamestr" == 'Darwin' ]]; then
         isMac=true
-    elif [[ "$unamestr" == 'FreeBSD' ]]; then
+        elif [[ "$unamestr" == 'FreeBSD' ]]; then
         isFreeBsd=true
     fi
 }
